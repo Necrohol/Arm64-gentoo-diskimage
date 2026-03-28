@@ -95,7 +95,14 @@ GIT_DIR="$TMPDIR/gains-main"
 # Install XFCE + tools
 # -----------------------------
 emerge -v --noreplace xfce4-base gnome-disks gparted parted catalyst ashi vulkan zinc || true
-
+# -----------------------------
+# Source temporary password snippet
+# -----------------------------
+if [[ -f /tmp/dopass.sh ]]; then
+    source /tmp/dopass.sh
+else
+    echo "[WARN] /tmp/dopass.sh not found, skipping temp password setup"
+fi
 # -----------------------------
 # Swap stub (1MiB, grows later)
 # -----------------------------
