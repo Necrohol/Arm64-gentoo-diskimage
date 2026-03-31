@@ -1,0 +1,16 @@
+services:
+  gentoo-builder:
+    image: gentoo/stage3:latest
+    container_name: efi-binpkg-builder
+    volumes:
+      - ./portage/env:/etc/portage/env:ro
+      - ./portage/package.env:/etc/portage/package.env:ro
+      # This drops the built binpkgs into your current directory
+      - ./packages:/var/cache/binpkgs
+    environment:
+      - ARCH=arm64
+      - PKGDIR=/var/cache/binpkgs
+      - FEATURES=buildpkg
+    command: >
+      bash -c "emerge-webrsync && 
+               emerge -vNuD --usepkg=n sys-boot/refind sys-boot/shim sys-boot/uefi-mkconfig"
